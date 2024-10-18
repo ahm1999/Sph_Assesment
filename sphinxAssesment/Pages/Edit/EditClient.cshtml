@@ -1,0 +1,68 @@
+﻿@page
+@using DAL.Entities
+@model sphinxAssesment.Pages.Edit.EditClientModel
+@{
+}
+
+<div class="container">
+
+
+<a asp-page="/ClientPage" asp-route-ClientCode="@Model.ViewModel.CurrentCLient.Code" class="btn btn-primary" role="button">Go back</a>
+
+
+<form asp-page="/Edit/EditClient" asp-page-handler="Edit">
+
+    <input asp-for="ViewModel.CurrentCLient.Code" value="@Model.ViewModel.CurrentCLient.Code" type="hidden">
+
+    <label asp-for="ViewModel.CurrentCLient.Name"></label>
+    <input class="form-control w-50" asp-for="ViewModel.CurrentCLient.Name" value="@Model.ViewModel.CurrentCLient.Name">
+    <span asp-validation-for="ViewModel.CurrentCLient.Name" class="text-danger"></span>
+
+
+    <label asp-for="ViewModel.CurrentCLient.CLientClass"></label>
+     <select class="form-select w-25" asp-for="ViewModel.CurrentCLient.CLientClass" asp-items="Html.GetEnumSelectList<CLientClass>()">
+        <option value="@Model.ViewModel.CurrentCLient.CLientClass">select a class</option>
+    </select>
+
+    <label asp-for="ViewModel.CurrentCLient.State"></label>
+    <select class="form-select w-25" asp-for="ViewModel.CurrentCLient.State" asp-items="Html.GetEnumSelectList<State>()">
+        <option value="@Model.ViewModel.CurrentCLient.State">select a State</option>
+    </select>
+
+    <button class="btn btn-info" type="submit">submit</button>
+
+
+</form>
+
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Delete Client</button>
+
+    <div class="modal" id="myModal" role="dialog">
+        <div class="modal-dialog align-items-center">
+
+            
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete Client</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Delete the Client.</p>
+                    <form asp-page="/Edit/EditClient" asp-page-handler="Delete">
+                        <input asp-for="ViewModel.CurrentCLient.Code" type="hidden" value="@Model.ViewModel.CurrentCLient.Code" />
+                    <button type="submit" >Delete Client</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

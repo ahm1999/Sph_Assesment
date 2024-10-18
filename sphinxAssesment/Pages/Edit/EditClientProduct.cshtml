@@ -1,0 +1,57 @@
+﻿@page
+@model sphinxAssesment.Pages.Edit.EditClientProductModel
+@{
+}
+
+<a asp-page="/ClientPage" asp-route-ClientCode="@Model.ViewModel.CurrentCliPro.ClientCode" class="btn btn-primary" role="button">Go back</a>
+
+
+
+<form asp-page="/Edit/EditClientProduct" asp-page-handler="Edit">
+    <input asp-for="ViewModel.CurrentCliPro.ClientCode" value="@Model.ViewModel.CurrentCliPro.ClientCode" type="hidden"></input>
+    <input asp-for="ViewModel.CurrentCliPro.ProductId" value="@Model.ViewModel.CurrentCliPro.ProductId" type="hidden"></input>
+
+    <label asp-for="ViewModel.CurrentCliPro.License" ></label>
+    <input asp-for="ViewModel.CurrentCliPro.License" value="@Model.ViewModel.CurrentCliPro.License"></input>
+    <span asp-validation-for="ViewModel.CurrentCliPro.EndData" class="text-danger"></span>
+
+    
+    <label asp-for="ViewModel.CurrentCliPro.StartData"></label>
+    <input asp-for="ViewModel.CurrentCliPro.StartData" value="@Model.ViewModel.CurrentCliPro.StartData"></input>
+    <span asp-validation-for="ViewModel.CurrentCliPro.EndData" class="text-danger"></span>
+
+    <label asp-for="ViewModel.CurrentCliPro.EndData"></label>
+    <input asp-for="ViewModel.CurrentCliPro.EndData" value="@Model.ViewModel.CurrentCliPro.EndData"></input>
+    <span asp-validation-for="ViewModel.CurrentCliPro.EndData" class="text-danger"></span>
+
+    <button type="submit">submit</button>
+</form>
+
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Delete Client Product</button>
+
+<!-- Modal -->
+<div class="modal" id="myModal" role="dialog">
+    <div class="modal-dialog align-items-center">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Client Product</h4>
+            </div>
+            <div class="modal-body">
+                <p>Delete the Client Product.</p>
+                <form asp-page="/Edit/EditClientProduct" asp-page-handler="Delete">
+                    <input asp-for="ViewModel.CurrentCliPro.ProductId" type="hidden" value="@Model.ViewModel.CurrentCliPro.ProductId" />
+                    <input asp-for="ViewModel.CurrentCliPro.ClientCode" type="hidden" value="@Model.ViewModel.CurrentCliPro.ClientCode" />
+                    <button type="submit">Delete Product</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

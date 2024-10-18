@@ -1,0 +1,101 @@
+﻿
+@page
+@using DAL.Entities;
+@model sphinxAssesment.Pages.ClientPageModel
+@{
+}
+
+<h3>Client Page</h3>
+
+<h4>Client Name :@Model.ViewModel.CurrentClient.Name</h4>
+<p>Client Class :@Model.ViewModel.CurrentClient.CLientClass</p>
+<p>Client Code :@Model.ViewModel.CurrentClient.Code</p>
+<p>Client State :@Model.ViewModel.CurrentClient.State</p>
+
+<br />
+<a asp-page="/Edit/EditClient" asp-route-ClientCode="@Model.ViewModel.CurrentClient.Code" class="btn btn-primary" role="button">Edit</a>
+
+<h5>
+    clientProducts
+</h5>
+
+<div class="container">
+
+
+    
+<div>
+
+    @foreach (var ClientP in Model.ViewModel.CurrentClient.ClientProducts)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">@ClientP.Product.Name</h5>
+                <p class="card-text">Lisence: @ClientP.License</p>
+                <a asp-page="/Edit/EditClientProduct" asp-route-ClientCode="@ClientP.ClientCode" asp-route-ProductId="@ClientP.ProductId"  class="btn btn-primary" role="button">Edit</a>
+            </div>
+            
+        </div>
+
+
+
+
+    }
+
+</div>
+
+
+    @for (var i = 0; i < Model.ViewModel.numberOfpages; i++)
+    {
+        <a asp-page="/ClientPage" asp-route-clientCode="@Model.ViewModel.CurrentClient.Code" asp-route-pageNo="@i">@i</a>
+    }
+<div class="row">
+@foreach(Product product in Model.ViewModel.ActiveProducts){
+        <div id="@product.ProductId" class="card" style="width: 18rem;overflow:hidden">
+            <div class="card-body">
+                <h5 class="card-title">@product.Name</h5>
+                <p class="card-text">@product.Description</p>
+                <button onclick="AddToclientButton('@product.ProductId.ToString()')" class="btn btn-primary">Add To client</button>
+
+                <div id="form-@product.ProductId" style="display: none;">
+                    <form asp-page="/ClientPage" asp-page-handler="AddClientProduct">
+
+                        <input asp-for="ViewModel.CreateClientProduct.ProductId" type="hidden" value="@product.ProductId">
+                        <input asp-for="ViewModel.CreateClientProduct.ClientCode" type="hidden" value="@Model.ViewModel.CurrentClient.Code">
+
+                        <label class="form-label" asp-for="ViewModel.CreateClientProduct.License"></label>
+                        <input class="form-control" asp-for="ViewModel.CreateClientProduct.License">
+                        <span asp-validation-for="ViewModel.CreateClientProduct.License" class="text-danger"></span>
+
+                        <input class="form-date" asp-for="ViewModel.CreateClientProduct.StartData">
+                        <span asp-validation-for="ViewModel.CreateClientProduct.StartData" class="text-danger"></span>
+
+                        <input asp-for="ViewModel.CreateClientProduct.EndData">
+                        <span asp-validation-for="ViewModel.CreateClientProduct.EndData" class="text-danger"></span>
+
+                        <button class="btn btn-primary" type="submit">Submit</button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+}
+</div>
+
+</div>
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script>
+    function AddToclientButton(Id){
+
+        const form = document.getElementById(`form-${Id}`);
+
+        // Toggle the display property between 'none' and 'block'
+        if (form.style.display === 'none') {
+            form.style.display = 'block'; // Show the form
+        } else {
+            form.style.display = 'none';  // Hide the form
+        }
+    }
+</script>

@@ -1,0 +1,92 @@
+﻿@page
+@using DAL.Entities
+@using DTOs.ClientDTOS
+@model sphinxAssesment.Pages.ClientModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    // clientDTO.Name
+
+   
+}
+
+
+<form method="post">
+    <label asp-for="clientPageViewModel.createCLientDTO.Name"></label>
+    <input class="form-control w-50" asp-for="clientPageViewModel.createCLientDTO.Name" />
+    <span asp-validation-for="clientPageViewModel.createCLientDTO.Name" class="text-danger"></span>
+
+    <label asp-for="clientPageViewModel.createCLientDTO.CLientClass"></label>
+
+    <select class="form-select w-25"  asp-for="clientPageViewModel.createCLientDTO.CLientClass" asp-items="Html.GetEnumSelectList<CLientClass>()">
+        <option value="">select a class</option>
+    </select>
+
+    <label asp-for="clientPageViewModel.createCLientDTO.State"></label>
+
+    <select class="form-select w-25" asp-for="clientPageViewModel.createCLientDTO.State" asp-items="Html.GetEnumSelectList<State>()">
+        <option value="">select a State</option>
+    </select>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<div>
+
+    @for (var i = 0; i < Model.clientPageViewModel.noOfPages; i++)
+    {
+        <a asp-page="/Client" asp-route-pageNo="@i">@i</a>
+
+    }
+
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => Model.clientPageViewModel.Clients[0].Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.clientPageViewModel.Clients[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.clientPageViewModel.Clients[0].State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.clientPageViewModel.Clients[0].CLientClass)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+    <tbody>
+    @foreach (Client client in Model.clientPageViewModel.Clients){
+    <tr>
+            <td>
+                @Html.DisplayFor(modelItem => client.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => client.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem =>  client.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => client.CLientClass)
+            </td>
+            <td>
+               <a asp-page="/ClientPage" asp-route-clientCode="@client.Code">Client page</a>
+            </td>
+
+    </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
